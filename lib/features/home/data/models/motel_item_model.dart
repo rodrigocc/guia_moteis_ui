@@ -74,14 +74,6 @@ class CategoriaItem {
   }
 }
 
-// Função para converter JSON para lista de motéis
-// List<Motel> parseMoteis(String responseBody) {
-//   final parsed = json.decode(responseBody);
-//   return (parsed['data']['moteis'] as List)
-//       .map((json) => Motel.fromJson(json))
-//       .toList();
-// }
-
 List<Motel> parseMoteis(Map<String, dynamic> parsedJson) {
   return (parsedJson['data']['moteis'] as List)
       .map((json) => Motel.fromJson(json))

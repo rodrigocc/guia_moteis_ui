@@ -1,5 +1,3 @@
-import 'package:guia_moteis_v1/features/home/data/models/list_moteis_model.dart';
-
 class Motel {
   final String nome;
   final String logo;
