@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guia_moteis_v1/config/injection_container.dart';
+import 'package:guia_moteis_v1/config/themes/theme.dart';
 import 'package:guia_moteis_v1/features/home/presentation/bloc/home_bloc.dart';
 import 'package:guia_moteis_v1/features/home/presentation/bloc/home_event.dart';
 import 'package:guia_moteis_v1/features/home/presentation/bloc/home_state.dart';
@@ -29,8 +30,14 @@ class MotelListScreen extends StatelessWidget {
                     return Column(
                       children: [
                         ListTile(
-                          title: Text(state.moteis.first.nome),
-                          subtitle: Text(state.moteis.first.bairro),
+                          title: Text(
+                            state.moteis.first.nome,
+                            style: AppTextStyles.heading2,
+                          ),
+                          subtitle: Text(
+                            state.moteis.first.bairro,
+                            style: AppTextStyles.bodyText,
+                          ),
                           leading: Image.network(state.moteis.first.logo,
                               width: 50, height: 50),
                         ),
@@ -58,37 +65,60 @@ class MotelListScreen extends StatelessWidget {
                                   SizedBox(
                                     height: 5,
                                   ),
-                                  Text(suite[index].nome),
+                                  Text(
+                                    suite[index].nome,
+                                    style: AppTextStyles.heading3,
+                                  ),
                                   SizedBox(
                                     width:
                                         MediaQuery.sizeOf(context).width * 0.8,
                                     height:
                                         MediaQuery.sizeOf(context).height * 0.2,
                                     child: Container(
+                                      decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          boxShadow: [
+                                            BoxShadow(color: Colors.white)
+                                          ]),
                                       padding: EdgeInsets.symmetric(
                                           horizontal: 16, vertical: 16),
-                                      color: Colors.white,
-                                      child: Text(
-                                          "R\$${suite[index].precoMinimo.toString()}"),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        spacing: 10,
+                                        children: [
+                                          Text(
+                                            'Preço Mínimo',
+                                            style: AppTextStyles.bodyText,
+                                          ),
+                                          Text(
+                                            "R\$${suite[index].precoMinimo.toString()}",
+                                            style: AppTextStyles.heading3,
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                   Container(
-                                    child: Row(
-                                      children: suite[index]
-                                          .categoriaItens
-                                          .map((categoria) {
-                                        return Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 4.0),
-                                          child: Image.network(
-                                            categoria.icone,
-                                            width:
-                                                30, // Ajuste o tamanho conforme necessário
-                                            height: 30,
-                                            fit: BoxFit.contain,
-                                          ),
-                                        );
-                                      }).toList(),
+                                    height: 60,
+                                    child: Card(
+                                      child: Row(
+                                        children: suite[index]
+                                            .categoriaItens
+                                            .map((categoria) {
+                                          return Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 4.0),
+                                            child: Image.network(
+                                              categoria.icone,
+                                              width:
+                                                  30, // Ajuste o tamanho conforme necessário
+                                              height: 30,
+                                              fit: BoxFit.contain,
+                                            ),
+                                          );
+                                        }).toList(),
+                                      ),
                                     ),
                                   ),
                                 ],
