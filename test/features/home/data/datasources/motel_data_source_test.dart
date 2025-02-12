@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:http/http.dart' as http;
 import 'package:guia_moteis_v1/features/home/data/datasources/fetch_list_moteis_datasource.dart';
 import 'package:guia_moteis_v1/features/home/data/models/motel_item_model.dart';
 import 'package:guia_moteis_v1/config/mock_http_client.dart';
+import 'package:guia_moteis_v1/config/http_client.dart'; // Certifique-se de importar seu IHttpClient
 import 'dart:convert';
 
 void main() {
@@ -11,8 +11,9 @@ void main() {
 
   setUp(() {
     mockHttpClient = MockHttpClient({
-      'https://www.jsonkeeper.com/b/1IXK': http.Response(
-        json.encode({
+      'https://www.jsonkeeper.com/b/1IXK': HttpResponse(
+        statusCode: 200,
+        body: json.encode({
           'data': {
             'moteis': [
               {
@@ -33,8 +34,6 @@ void main() {
             ]
           }
         }),
-        200, // Status Code
-        headers: {'Content-Type': 'application/json'},
       ),
     });
 
@@ -54,8 +53,10 @@ void main() {
 
     test('Deve lançar uma Exception quando a resposta não for 200', () async {
       mockHttpClient = MockHttpClient({
-        'https://www.jsonkeeper.com/b/1IXK':
-            http.Response('Erro no servidor', 500),
+        'https://www.jsonkeeper.com/b/1IXK': HttpResponse(
+          statusCode: 500,
+          body: 'Erro no servidor',
+        ),
       });
 
       dataSource = MotelRemoteDataSourceImpl(client: mockHttpClient);
